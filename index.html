@@ -1,0 +1,2301 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+>
+
+<meta
+  name="theme-color"
+  content="#020617"
+>
+
+<title>
+CS Workshop | Volunteer Scanner
+</title>
+
+
+<!-- QR SCANNER LIBRARY -->
+
+<script
+  src="https://unpkg.com/html5-qrcode"
+></script>
+
+
+<style>
+
+/* =====================================================
+   GLOBAL
+===================================================== */
+
+* {
+  box-sizing:border-box;
+}
+
+
+html {
+  background:#020617;
+}
+
+
+body {
+
+  margin:0;
+
+  min-height:100vh;
+
+  min-height:100dvh;
+
+  background:
+    radial-gradient(
+      circle at top,
+      #172554,
+      #0f172a 45%,
+      #020617 100%
+    );
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  color:white;
+
+}
+
+
+button,
+input {
+
+  font-family:inherit;
+
+}
+
+
+button {
+
+  -webkit-tap-highlight-color:
+    transparent;
+
+}
+
+
+/* =====================================================
+   CONTAINER
+===================================================== */
+
+.container {
+
+  width:100%;
+
+  max-width:520px;
+
+  margin:auto;
+
+  padding:
+    22px
+    18px
+    35px;
+
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.header {
+
+  text-align:center;
+
+  padding:
+    15px
+    5px
+    22px;
+
+}
+
+
+.club {
+
+  color:#38bdf8;
+
+  font-size:12px;
+
+  font-weight:800;
+
+  letter-spacing:3px;
+
+}
+
+
+.title {
+
+  margin-top:10px;
+
+  font-size:31px;
+
+  font-weight:900;
+
+}
+
+
+.subtitle {
+
+  margin-top:8px;
+
+  color:#a5b4fc;
+
+  font-size:12px;
+
+  font-weight:700;
+
+  letter-spacing:1.5px;
+
+}
+
+
+/* =====================================================
+   CARD
+===================================================== */
+
+.card {
+
+  background:
+    rgba(
+      15,
+      23,
+      42,
+      .96
+    );
+
+  border:
+    1px solid #334155;
+
+  border-radius:22px;
+
+  padding:20px;
+
+  box-shadow:
+    0 25px 60px
+    rgba(
+      0,
+      0,
+      0,
+      .45
+    );
+
+}
+
+
+/* =====================================================
+   DAY
+===================================================== */
+
+.day {
+
+  text-align:center;
+
+  background:#172554;
+
+  border:
+    1px solid #1d4ed8;
+
+  border-radius:12px;
+
+  padding:12px;
+
+  margin-bottom:20px;
+
+  color:#93c5fd;
+
+  font-size:13px;
+
+  font-weight:800;
+
+}
+
+
+/* =====================================================
+   LOGIN
+===================================================== */
+
+.login-icon {
+
+  text-align:center;
+
+  font-size:50px;
+
+  margin-top:5px;
+
+}
+
+
+.login-title {
+
+  margin-top:15px;
+
+  text-align:center;
+
+  font-size:22px;
+
+  font-weight:900;
+
+}
+
+
+.login-text {
+
+  text-align:center;
+
+  color:#94a3b8;
+
+  font-size:14px;
+
+  line-height:1.6;
+
+  margin:
+    10px
+    0
+    22px;
+
+}
+
+
+.pin-input {
+
+  width:100%;
+
+  height:56px;
+
+  border-radius:12px;
+
+  border:
+    1px solid #475569;
+
+  background:#020617;
+
+  color:white;
+
+  outline:none;
+
+  text-align:center;
+
+  font-size:23px;
+
+  font-weight:800;
+
+  letter-spacing:8px;
+
+}
+
+
+.pin-input:focus {
+
+  border-color:#3b82f6;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(
+      59,
+      130,
+      246,
+      .15
+    );
+
+}
+
+
+/* =====================================================
+   BUTTONS
+===================================================== */
+
+.primary-button {
+
+  width:100%;
+
+  margin-top:15px;
+
+  padding:16px;
+
+  border:none;
+
+  border-radius:12px;
+
+  background:#2563eb;
+
+  color:white;
+
+  font-size:15px;
+
+  font-weight:900;
+
+  cursor:pointer;
+
+}
+
+
+.primary-button:active {
+
+  transform:
+    scale(.985);
+
+}
+
+
+.primary-button:disabled {
+
+  opacity:.55;
+
+  cursor:not-allowed;
+
+}
+
+
+.secondary-button {
+
+  width:100%;
+
+  margin-top:12px;
+
+  padding:14px;
+
+  border:
+    1px solid #475569;
+
+  border-radius:12px;
+
+  background:#1e293b;
+
+  color:white;
+
+  font-size:14px;
+
+  font-weight:800;
+
+  cursor:pointer;
+
+}
+
+
+/* =====================================================
+   CAMERA PERMISSION
+===================================================== */
+
+.camera-icon {
+
+  text-align:center;
+
+  font-size:54px;
+
+  margin-top:5px;
+
+}
+
+
+.camera-title {
+
+  text-align:center;
+
+  font-size:22px;
+
+  font-weight:900;
+
+  margin-top:13px;
+
+}
+
+
+.camera-description {
+
+  text-align:center;
+
+  color:#cbd5e1;
+
+  font-size:14px;
+
+  line-height:1.65;
+
+  margin-top:10px;
+
+}
+
+
+/* =====================================================
+   SCANNER
+===================================================== */
+
+#reader {
+
+  width:100%;
+
+  overflow:hidden;
+
+  border-radius:16px;
+
+  background:#000;
+
+}
+
+
+#reader video {
+
+  width:100% !important;
+
+  border-radius:16px;
+
+}
+
+
+.scan-status {
+
+  text-align:center;
+
+  min-height:26px;
+
+  margin-top:16px;
+
+  color:#cbd5e1;
+
+  font-size:14px;
+
+  line-height:1.5;
+
+}
+
+
+.scanning-indicator {
+
+  display:inline-block;
+
+  width:9px;
+
+  height:9px;
+
+  margin-right:6px;
+
+  border-radius:50%;
+
+  background:#22c55e;
+
+}
+
+
+/* =====================================================
+   PROCESSING
+===================================================== */
+
+.processing {
+
+  text-align:center;
+
+  padding:
+    30px
+    5px;
+
+}
+
+
+.spinner {
+
+  width:46px;
+
+  height:46px;
+
+  margin:
+    5px
+    auto
+    20px;
+
+  border:
+    4px solid #334155;
+
+  border-top-color:
+    #38bdf8;
+
+  border-radius:50%;
+
+  animation:
+    spin .8s linear infinite;
+
+}
+
+
+@keyframes spin {
+
+  to {
+    transform:
+      rotate(360deg);
+  }
+
+}
+
+
+/* =====================================================
+   RESULT
+===================================================== */
+
+.result {
+
+  display:none;
+
+  padding:22px;
+
+  border-radius:16px;
+
+  text-align:center;
+
+}
+
+
+.result-success {
+
+  background:#052e1b;
+
+  border:
+    1px solid #22c55e;
+
+}
+
+
+.result-duplicate {
+
+  background:#422006;
+
+  border:
+    1px solid #f59e0b;
+
+}
+
+
+.result-error {
+
+  background:#450a0a;
+
+  border:
+    1px solid #ef4444;
+
+}
+
+
+.result-icon {
+
+  font-size:48px;
+
+}
+
+
+.result-title {
+
+  margin-top:10px;
+
+  font-size:18px;
+
+  font-weight:900;
+
+}
+
+
+.student-name {
+
+  margin-top:18px;
+
+  font-size:24px;
+
+  font-weight:900;
+
+}
+
+
+.student-id {
+
+  margin-top:7px;
+
+  color:#cbd5e1;
+
+  font-size:14px;
+
+}
+
+
+.attendance {
+
+  margin-top:17px;
+
+  font-size:17px;
+
+  font-weight:800;
+
+  line-height:1.6;
+
+}
+
+
+/* =====================================================
+   MESSAGES
+===================================================== */
+
+.message {
+
+  text-align:center;
+
+  min-height:22px;
+
+  margin-top:13px;
+
+  color:#fbbf24;
+
+  font-size:13px;
+
+  line-height:1.5;
+
+}
+
+
+.error-message {
+
+  color:#fca5a5;
+
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+.footer {
+
+  text-align:center;
+
+  margin-top:22px;
+
+  color:#64748b;
+
+  font-size:11px;
+
+  line-height:1.8;
+
+}
+
+
+/* =====================================================
+   HIDDEN
+===================================================== */
+
+.hidden {
+
+  display:none !important;
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<!-- ===================================================
+     HEADER
+=================================================== -->
+
+<div class="header">
+
+  <div class="club">
+    CODING CLUB
+  </div>
+
+  <div class="title">
+    CS WORKSHOP
+  </div>
+
+  <div class="subtitle">
+    VOLUNTEER ATTENDANCE SCANNER
+  </div>
+
+</div>
+
+
+<div class="card">
+
+
+<!-- ===================================================
+     DAY
+=================================================== -->
+
+<div
+  id="dayDisplay"
+  class="day"
+>
+  CHECKING WORKSHOP DAY...
+</div>
+
+
+<!-- ===================================================
+     LOGIN
+=================================================== -->
+
+<div id="loginScreen">
+
+  <div class="login-icon">
+    🔐
+  </div>
+
+  <div class="login-title">
+    Volunteer Access
+  </div>
+
+  <div class="login-text">
+
+    Enter the Coding Club volunteer PIN
+    to access the attendance scanner.
+
+  </div>
+
+
+  <input
+    id="pinInput"
+    class="pin-input"
+    type="password"
+    inputmode="numeric"
+    autocomplete="off"
+    maxlength="10"
+    placeholder="•••••"
+  >
+
+
+  <button
+    class="primary-button"
+    onclick="continueToCamera()"
+  >
+    CONTINUE
+  </button>
+
+
+  <div
+    id="loginMessage"
+    class="message"
+  ></div>
+
+</div>
+
+
+<!-- ===================================================
+     CAMERA PERMISSION
+=================================================== -->
+
+<div
+  id="permissionScreen"
+  class="hidden"
+>
+
+  <div class="camera-icon">
+    📷
+  </div>
+
+
+  <div class="camera-title">
+    Camera Access
+  </div>
+
+
+  <div class="camera-description">
+
+    The volunteer scanner needs access
+    to this device's camera.
+
+    <br><br>
+
+    Tap the button below and choose
+    <strong>Allow</strong>
+    when Chrome asks for camera permission.
+
+  </div>
+
+
+  <button
+    id="cameraButton"
+    class="primary-button"
+    onclick="requestCamera()"
+  >
+    📷 ALLOW CAMERA & START SCANNER
+  </button>
+
+
+  <div
+    id="cameraMessage"
+    class="message"
+  ></div>
+
+</div>
+
+
+<!-- ===================================================
+     SCANNER
+=================================================== -->
+
+<div
+  id="scannerScreen"
+  class="hidden"
+>
+
+  <div id="reader"></div>
+
+
+  <div
+    id="scanStatus"
+    class="scan-status"
+  >
+
+    <span class="scanning-indicator"></span>
+
+    Point the back camera at the student's QR code.
+
+  </div>
+
+</div>
+
+
+<!-- ===================================================
+     PROCESSING
+=================================================== -->
+
+<div
+  id="processingScreen"
+  class="processing hidden"
+>
+
+  <div class="spinner"></div>
+
+  <strong>
+    Processing Attendance
+  </strong>
+
+  <div
+    style="
+      color:#94a3b8;
+      font-size:13px;
+      margin-top:8px;
+    "
+  >
+    Please wait...
+  </div>
+
+</div>
+
+
+<!-- ===================================================
+     RESULT
+=================================================== -->
+
+<div
+  id="resultScreen"
+  class="result"
+>
+
+  <div
+    id="resultIcon"
+    class="result-icon"
+  ></div>
+
+
+  <div
+    id="resultTitle"
+    class="result-title"
+  ></div>
+
+
+  <div
+    id="studentName"
+    class="student-name"
+  ></div>
+
+
+  <div
+    id="studentId"
+    class="student-id"
+  ></div>
+
+
+  <div
+    id="attendanceText"
+    class="attendance"
+  ></div>
+
+
+  <button
+    id="scanNextButton"
+    class="primary-button"
+    onclick="scanNextStudent()"
+  >
+    SCAN NEXT STUDENT
+  </button>
+
+</div>
+
+
+</div>
+
+
+<!-- ===================================================
+     FOOTER
+=================================================== -->
+
+<div class="footer">
+
+  CS WORKSHOP • 22 & 23 AUGUST 2026
+
+  <br>
+
+  ALH - COMPUTER LAB
+
+  <br>
+
+  Coding Club • Volunteer Attendance System
+
+</div>
+
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   CONFIGURATION
+===================================================== */
+
+/*
+ * IMPORTANT:
+ *
+ * After deploying Apps Script,
+ * paste the /exec URL here.
+ */
+
+const APPS_SCRIPT_URL =
+  "PASTE_YOUR_APPS_SCRIPT_EXEC_URL_HERE";
+
+
+/*
+ * Request timeout.
+ */
+
+const API_TIMEOUT =
+  15000;
+
+
+/* =====================================================
+   VARIABLES
+===================================================== */
+
+let scanner =
+  null;
+
+
+let scanning =
+  false;
+
+
+let processing =
+  false;
+
+
+let volunteerPin =
+  "";
+
+
+let callbackCounter =
+  0;
+
+
+/* =====================================================
+   DAY DISPLAY
+===================================================== */
+
+function updateDayDisplay() {
+
+  const now =
+    new Date();
+
+
+  /*
+   * Force India timezone for display.
+   */
+
+  const parts =
+    new Intl.DateTimeFormat(
+      "en-CA",
+      {
+
+        timeZone:
+          "Asia/Kolkata",
+
+        year:
+          "numeric",
+
+        month:
+          "2-digit",
+
+        day:
+          "2-digit"
+
+      }
+    )
+    .formatToParts(now);
+
+
+  const values = {};
+
+
+  parts.forEach(
+    function(part) {
+
+      if (
+        part.type !== "literal"
+      ) {
+
+        values[
+          part.type
+        ] =
+          part.value;
+
+      }
+
+    }
+  );
+
+
+  const date =
+    values.year +
+    "-" +
+    values.month +
+    "-" +
+    values.day;
+
+
+  const display =
+    document.getElementById(
+      "dayDisplay"
+    );
+
+
+  if (
+    date === "2026-08-22"
+  ) {
+
+    display.textContent =
+      "DAY 1 • AUGUST 22, 2026";
+
+  }
+
+
+  else if (
+    date === "2026-08-23"
+  ) {
+
+    display.textContent =
+      "DAY 2 • AUGUST 23, 2026";
+
+  }
+
+
+  else {
+
+    display.textContent =
+      "ATTENDANCE NOT ACTIVE";
+
+  }
+
+}
+
+
+/* =====================================================
+   LOGIN
+===================================================== */
+
+function continueToCamera() {
+
+  const pin =
+    document
+      .getElementById(
+        "pinInput"
+      )
+      .value
+      .trim();
+
+
+  const message =
+    document.getElementById(
+      "loginMessage"
+    );
+
+
+  if (!pin) {
+
+    message.textContent =
+      "Please enter the volunteer PIN.";
+
+    return;
+
+  }
+
+
+  /*
+   * Store only in memory.
+   *
+   * We intentionally do not put the real PIN
+   * anywhere in this HTML source.
+   */
+
+  volunteerPin =
+    pin;
+
+
+  message.textContent =
+    "";
+
+
+  hide(
+    "loginScreen"
+  );
+
+
+  show(
+    "permissionScreen"
+  );
+
+}
+
+
+/* =====================================================
+   REQUEST CAMERA
+===================================================== */
+
+async function requestCamera() {
+
+  const button =
+    document.getElementById(
+      "cameraButton"
+    );
+
+
+  const message =
+    document.getElementById(
+      "cameraMessage"
+    );
+
+
+  button.disabled =
+    true;
+
+
+  button.textContent =
+    "REQUESTING CAMERA...";
+
+
+  message.textContent =
+    "Waiting for camera permission...";
+
+
+  /*
+   * Camera requires HTTPS.
+   */
+
+  if (
+    location.protocol !== "https:" &&
+    location.hostname !== "localhost"
+  ) {
+
+    cameraFailure(
+      "Camera requires HTTPS. Open the published GitHub Pages HTTPS URL."
+    );
+
+    return;
+
+  }
+
+
+  if (
+    !navigator.mediaDevices ||
+    !navigator.mediaDevices.getUserMedia
+  ) {
+
+    cameraFailure(
+      "This browser does not support camera access."
+    );
+
+    return;
+
+  }
+
+
+  try {
+
+    /*
+     * Explicit permission request from
+     * the user's button click.
+     */
+
+    const stream =
+      await navigator
+        .mediaDevices
+        .getUserMedia({
+
+          video: {
+
+            facingMode: {
+              ideal:
+                "environment"
+            }
+
+          },
+
+          audio:
+            false
+
+        });
+
+
+    /*
+     * Permission succeeded.
+     *
+     * Stop temporary stream.
+     * Html5Qrcode starts its own stream next.
+     */
+
+    stream
+      .getTracks()
+      .forEach(
+        function(track) {
+
+          track.stop();
+
+        }
+      );
+
+
+    message.textContent =
+      "Camera permission granted.";
+
+
+    hide(
+      "permissionScreen"
+    );
+
+
+    show(
+      "scannerScreen"
+    );
+
+
+    await startScanner();
+
+  }
+
+
+  catch (error) {
+
+    console.error(
+      "Camera permission:",
+      error
+    );
+
+
+    if (
+      error.name ===
+      "NotAllowedError"
+    ) {
+
+      cameraFailure(
+        "Camera permission is blocked. Open Chrome Site Settings for this website and set Camera to Allow."
+      );
+
+    }
+
+
+    else if (
+      error.name ===
+      "NotFoundError"
+    ) {
+
+      cameraFailure(
+        "No camera was found on this device."
+      );
+
+    }
+
+
+    else if (
+      error.name ===
+      "NotReadableError"
+    ) {
+
+      cameraFailure(
+        "The camera is being used by another application. Close other camera apps and try again."
+      );
+
+    }
+
+
+    else if (
+      error.name ===
+      "OverconstrainedError"
+    ) {
+
+      cameraFailure(
+        "The requested camera is unavailable on this device."
+      );
+
+    }
+
+
+    else {
+
+      cameraFailure(
+        "Unable to access camera: " +
+        error.message
+      );
+
+    }
+
+  }
+
+}
+
+
+/* =====================================================
+   CAMERA FAILURE
+===================================================== */
+
+function cameraFailure(
+  text
+) {
+
+  const button =
+    document.getElementById(
+      "cameraButton"
+    );
+
+
+  const message =
+    document.getElementById(
+      "cameraMessage"
+    );
+
+
+  button.disabled =
+    false;
+
+
+  button.textContent =
+    "📷 TRY CAMERA AGAIN";
+
+
+  message.textContent =
+    "❌ " + text;
+
+
+  message.className =
+    "message error-message";
+
+}
+
+
+/* =====================================================
+   START SCANNER
+===================================================== */
+
+async function startScanner() {
+
+  processing =
+    false;
+
+
+  scanning =
+    true;
+
+
+  document.getElementById(
+    "scanStatus"
+  ).innerHTML =
+    '<span class="scanning-indicator"></span>' +
+    "Starting back camera...";
+
+
+  /*
+   * Clean previous scanner.
+   */
+
+  if (scanner) {
+
+    try {
+
+      if (
+        scanner.isScanning
+      ) {
+
+        await scanner.stop();
+
+      }
+
+    }
+
+    catch (error) {
+
+      console.log(error);
+
+    }
+
+
+    try {
+
+      scanner.clear();
+
+    }
+
+    catch (error) {
+
+      console.log(error);
+
+    }
+
+  }
+
+
+  scanner =
+    new Html5Qrcode(
+      "reader"
+    );
+
+
+  try {
+
+    /*
+     * Use ideal instead of exact.
+     *
+     * This strongly prefers the back camera
+     * while still working on devices whose
+     * camera driver doesn't expose an exact
+     * "environment" constraint.
+     */
+
+    await scanner.start(
+
+      {
+
+        facingMode:
+          "environment"
+
+      },
+
+      {
+
+        fps:
+          12,
+
+        qrbox:
+          function(
+            viewfinderWidth,
+            viewfinderHeight
+          ) {
+
+            const minEdge =
+              Math.min(
+                viewfinderWidth,
+                viewfinderHeight
+              );
+
+
+            const size =
+              Math.floor(
+                minEdge * 0.72
+              );
+
+
+            return {
+
+              width:
+                size,
+
+              height:
+                size
+
+            };
+
+          },
+
+        aspectRatio:
+          1.0
+
+      },
+
+      onScanSuccess,
+
+      function() {
+
+        /*
+         * Normal QR detection failures occur
+         * continuously while scanning.
+         *
+         * Ignore them.
+         */
+
+      }
+
+    );
+
+
+    document.getElementById(
+      "scanStatus"
+    ).innerHTML =
+      '<span class="scanning-indicator"></span>' +
+      "Back camera active • Point at student's QR code";
+
+
+  }
+
+  catch (error) {
+
+    console.error(
+      "Scanner:",
+      error
+    );
+
+
+    scanning =
+      false;
+
+
+    hide(
+      "scannerScreen"
+    );
+
+
+    show(
+      "permissionScreen"
+    );
+
+
+    cameraFailure(
+      "Unable to start the QR scanner. " +
+      error
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   QR SUCCESS
+===================================================== */
+
+async function onScanSuccess(
+  decodedText
+) {
+
+  /*
+   * Prevent repeated detections of the same QR.
+   */
+
+  if (
+    !scanning ||
+    processing
+  ) {
+
+    return;
+
+  }
+
+
+  scanning =
+    false;
+
+
+  processing =
+    true;
+
+
+  const hashKey =
+    String(
+      decodedText || ""
+    ).trim();
+
+
+  if (!hashKey) {
+
+    processing =
+      false;
+
+    scanning =
+      true;
+
+    return;
+
+  }
+
+
+  /*
+   * Stop camera before server request.
+   */
+
+  try {
+
+    if (
+      scanner &&
+      scanner.isScanning
+    ) {
+
+      await scanner.stop();
+
+    }
+
+  }
+
+  catch (error) {
+
+    console.log(error);
+
+  }
+
+
+  hide(
+    "scannerScreen"
+  );
+
+
+  show(
+    "processingScreen"
+  );
+
+
+  sendAttendance(
+    hashKey
+  );
+
+}
+
+
+/* =====================================================
+   SEND ATTENDANCE USING JSONP
+===================================================== */
+
+function sendAttendance(
+  hashKey
+) {
+
+  /*
+   * Validate configuration.
+   */
+
+  if (
+    !APPS_SCRIPT_URL ||
+    APPS_SCRIPT_URL.indexOf(
+      "PASTE_YOUR"
+    ) !== -1
+  ) {
+
+    hide(
+      "processingScreen"
+    );
+
+
+    showResult({
+
+      success:
+        false,
+
+      message:
+        "Apps Script URL has not been configured in index.html."
+
+    });
+
+
+    return;
+
+  }
+
+
+  callbackCounter++;
+
+
+  const callbackName =
+    "attendanceCallback_" +
+    Date.now() +
+    "_" +
+    callbackCounter;
+
+
+  const script =
+    document.createElement(
+      "script"
+    );
+
+
+  let completed =
+    false;
+
+
+  const timeout =
+    setTimeout(
+      function() {
+
+        if (completed) {
+
+          return;
+
+        }
+
+
+        completed =
+          true;
+
+
+        cleanupJsonp(
+          callbackName,
+          script
+        );
+
+
+        hide(
+          "processingScreen"
+        );
+
+
+        showResult({
+
+          success:
+            false,
+
+          message:
+            "Attendance server did not respond. Check the internet connection and try again."
+
+        });
+
+      },
+
+      API_TIMEOUT
+    );
+
+
+  /*
+   * Create global JSONP callback.
+   */
+
+  window[
+    callbackName
+  ] =
+    function(result) {
+
+      if (completed) {
+
+        return;
+
+      }
+
+
+      completed =
+        true;
+
+
+      clearTimeout(
+        timeout
+      );
+
+
+      cleanupJsonp(
+        callbackName,
+        script
+      );
+
+
+      hide(
+        "processingScreen"
+      );
+
+
+      /*
+       * Wrong volunteer PIN.
+       */
+
+      if (
+        result &&
+        result.authError
+      ) {
+
+        volunteerPin =
+          "";
+
+
+        hide(
+          "resultScreen"
+        );
+
+
+        show(
+          "loginScreen"
+        );
+
+
+        const loginMessage =
+          document.getElementById(
+            "loginMessage"
+          );
+
+
+        loginMessage.textContent =
+          "❌ Invalid volunteer PIN.";
+
+
+        loginMessage.className =
+          "message error-message";
+
+
+        document.getElementById(
+          "pinInput"
+        ).value =
+          "";
+
+
+        document.getElementById(
+          "pinInput"
+        ).focus();
+
+
+        processing =
+          false;
+
+
+        return;
+
+      }
+
+
+      showResult(
+        result
+      );
+
+    };
+
+
+  /*
+   * JSONP URL.
+   *
+   * No CORS fetch() is involved.
+   */
+
+  const params =
+    new URLSearchParams({
+
+      action:
+        "attendance",
+
+      hash:
+        hashKey,
+
+      pin:
+        volunteerPin,
+
+      callback:
+        callbackName,
+
+      /*
+       * Cache buster
+       */
+
+      _:
+        String(
+          Date.now()
+        )
+
+    });
+
+
+  script.src =
+    APPS_SCRIPT_URL +
+    "?" +
+    params.toString();
+
+
+  script.async =
+    true;
+
+
+  script.onerror =
+    function() {
+
+      if (completed) {
+
+        return;
+
+      }
+
+
+      completed =
+        true;
+
+
+      clearTimeout(
+        timeout
+      );
+
+
+      cleanupJsonp(
+        callbackName,
+        script
+      );
+
+
+      hide(
+        "processingScreen"
+      );
+
+
+      showResult({
+
+        success:
+          false,
+
+        message:
+          "Unable to connect to the attendance server."
+
+      });
+
+    };
+
+
+  document.body.appendChild(
+    script
+  );
+
+}
+
+
+/* =====================================================
+   CLEAN JSONP
+===================================================== */
+
+function cleanupJsonp(
+  callbackName,
+  script
+) {
+
+  try {
+
+    delete window[
+      callbackName
+    ];
+
+  }
+
+  catch (error) {
+
+    window[
+      callbackName
+    ] =
+      undefined;
+
+  }
+
+
+  if (
+    script &&
+    script.parentNode
+  ) {
+
+    script.parentNode
+      .removeChild(
+        script
+      );
+
+  }
+
+}
+
+
+/* =====================================================
+   SHOW RESULT
+===================================================== */
+
+function showResult(
+  data
+) {
+
+  processing =
+    false;
+
+
+  const result =
+    document.getElementById(
+      "resultScreen"
+    );
+
+
+  const icon =
+    document.getElementById(
+      "resultIcon"
+    );
+
+
+  const title =
+    document.getElementById(
+      "resultTitle"
+    );
+
+
+  const name =
+    document.getElementById(
+      "studentName"
+    );
+
+
+  const studentId =
+    document.getElementById(
+      "studentId"
+    );
+
+
+  const attendance =
+    document.getElementById(
+      "attendanceText"
+    );
+
+
+  result.style.display =
+    "block";
+
+
+  /*
+   * SUCCESS
+   */
+
+  if (
+    data &&
+    data.success
+  ) {
+
+    result.className =
+      "result result-success";
+
+
+    icon.textContent =
+      "✓";
+
+
+    title.textContent =
+      "ATTENDANCE MARKED";
+
+
+    name.textContent =
+      data.name || "";
+
+
+    studentId.textContent =
+      "Student ID: " +
+      (
+        data.studentId ||
+        ""
+      );
+
+
+    attendance.textContent =
+      data.day +
+      " ATTENDANCE: PRESENT • " +
+      data.time;
+
+  }
+
+
+  /*
+   * DUPLICATE
+   */
+
+  else if (
+    data &&
+    data.duplicate
+  ) {
+
+    result.className =
+      "result result-duplicate";
+
+
+    icon.textContent =
+      "⚠️";
+
+
+    title.textContent =
+      "ALREADY PRESENT";
+
+
+    name.textContent =
+      data.name || "";
+
+
+    studentId.textContent =
+      "Student ID: " +
+      (
+        data.studentId ||
+        ""
+      );
+
+
+    attendance.textContent =
+      data.message ||
+      "Attendance already marked.";
+
+  }
+
+
+  /*
+   * ERROR
+   */
+
+  else {
+
+    result.className =
+      "result result-error";
+
+
+    icon.textContent =
+      "✕";
+
+
+    title.textContent =
+      "ATTENDANCE NOT MARKED";
+
+
+    name.textContent =
+      "";
+
+
+    studentId.textContent =
+      "";
+
+
+    attendance.textContent =
+      data &&
+      data.message
+        ? data.message
+        : "Unknown attendance error.";
+
+  }
+
+}
+
+
+/* =====================================================
+   SCAN NEXT
+===================================================== */
+
+async function scanNextStudent() {
+
+  const result =
+    document.getElementById(
+      "resultScreen"
+    );
+
+
+  result.style.display =
+    "none";
+
+
+  hide(
+    "processingScreen"
+  );
+
+
+  show(
+    "scannerScreen"
+  );
+
+
+  processing =
+    false;
+
+
+  scanning =
+    true;
+
+
+  await startScanner();
+
+}
+
+
+/* =====================================================
+   DISPLAY HELPERS
+===================================================== */
+
+function show(
+  id
+) {
+
+  document
+    .getElementById(id)
+    .classList
+    .remove(
+      "hidden"
+    );
+
+}
+
+
+function hide(
+  id
+) {
+
+  document
+    .getElementById(id)
+    .classList
+    .add(
+      "hidden"
+    );
+
+}
+
+
+/* =====================================================
+   ENTER KEY FOR PIN
+===================================================== */
+
+document
+  .getElementById(
+    "pinInput"
+  )
+  .addEventListener(
+    "keydown",
+    function(event) {
+
+      if (
+        event.key === "Enter"
+      ) {
+
+        continueToCamera();
+
+      }
+
+    }
+  );
+
+
+/* =====================================================
+   INITIALIZATION
+===================================================== */
+
+updateDayDisplay();
+
+</script>
+
+</body>
+
+</html>
